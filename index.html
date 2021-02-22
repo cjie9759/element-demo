@@ -9,9 +9,9 @@
     <!-- <script src="htt\ps://unpkg.com/vue@next"></script> -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css"> -->
     <!-- <script src="https://unpkg.com/element-plus/lib/index.full.js"></script> -->
-    <script src="./vue.js"></script>
-    <link rel="stylesheet" href="./ele.css">
-    <script src="./ele.js"></script>
+    <script src="/vue.js"></script>
+    <link rel="stylesheet" href="/ele.css">
+    <script src="/ele.js"></script>
 
     <title>Document</title>
     <style type="text/css">
@@ -119,57 +119,43 @@
         };
         const BlUploadDemo = {
             template: `
-            <el-upload
-      class="upload-demo"
-      action="https://jsonplaceholder.typicode.com/posts/"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
-      :file-list="fileList"
-      list-type="picture">
-      <el-button size="small" type="primary">点击上传</el-button>
-      <template #tip>
-        <div class="el-upload__tip">
-          只能上传 jpg/png 文件，且不超过 500kb
-        </div>
-      </template>
-    </el-upload>
+            <el-upload class="upload-demo" ref="upload" :action="uploadurl" :on-preview="handlePreview" :on-remove="handleRemove" :on-exceed="exceed" :on-error="error" :on-success="success" :file-list="fileList" :limit="Number(1)" list-type="picture"> <el-button size="small" type="primary">点击上传</el-button> <template #tip> <div class="el-upload__tip"> 只能上传 jpg/png 文件，且不超过 500kb </div> </template> </el-upload>
 
             `,
+            props: ['uploadurl', 'name'],
+            emits: ['set-value'],
             data() {
                 return {
-                    dynamicValidateForm: {
-                        domains: [{
-                            value: ''
-                        }],
-                        email: ''
-                    }
+                    fileList: []
                 };
             },
             methods: {
-                submitForm(formName) {
-                    this.$refs[formName].validate((valid) => {
-                        if (valid) {
-                            alert('submit!');
-                        } else {
-                            console.log('error submit!!');
-                            return false;
-                        }
-                    });
+                handleRemove(file, fileList) {
+                    var a = {
+                        name: this.name,
+                        url: null
+                    };
+                    this.$emit('set-value', a);
                 },
-                resetForm(formName) {
-                    this.$refs[formName].resetFields();
+                handlePreview(file) {
+                    this.$message('click on item ,but nothing to show');
                 },
-                removeDomain(item) {
-                    var index = this.dynamicValidateForm.domains.indexOf(item)
-                    if (index !== -1) {
-                        this.dynamicValidateForm.domains.splice(index, 1)
+                exceed() {
+                    this.$message('已达上限');
+                },
+                success(response, file, fileList) {
+                    if (response.erro == 0) {
+                        var a = {
+                            name: this.name,
+                            url: response.url
+                        };
+                        this.$emit('set-value', a);
+                    } else {
+                        this.$refs.upload.clearFiles() && this.$message('上传失败');
                     }
                 },
-                addDomain() {
-                    this.dynamicValidateForm.domains.push({
-                        value: '',
-                        key: Date.now()
-                    });
+                error() {
+                    this.$message('上传失败');
                 }
             }
         };
@@ -214,13 +200,12 @@
         };
         const BlFormFrant = {
             template: `
-            <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type == 'switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --> </el-form-item> </el-form>
+            <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type =='switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> <bl-upload :uploadurl="action" :name="item.name" @set-value="setValue" v-if="item.type=='upload'"></bl-upload> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --></el-form-item> </el-form>
             `,
             data() {
                 var data = {
-                    form: {
-
-                    },
+                    form: {},
+                    action: '/test.php/upl',
                     items: [{
                         name: 'title',
                         type: 'text',
@@ -231,8 +216,12 @@
                         label: '推流链接',
                     }, {
                         name: 'logo',
-                        type: 'text',
-                        label: 'logo上传预留',
+                        type: 'upload',
+                        label: 'logo图',
+                    }, {
+                        name: 'bac',
+                        type: 'upload',
+                        label: '背景图',
                     }, {
                         name: 'sortitle',
                         type: 'text',
@@ -261,8 +250,16 @@
                     console.log('submit!');
                     console.log(this.form);
                     console.log(this);
+                },
+                setValue(data) {
+                    // form.
+                    console.log('setvalue');
+                    console.log(data);
                 }
             },
+            components: {
+                'bl-upload': BlUploadDemo,
+            }
 
         };
         const App = {
@@ -275,7 +272,7 @@
                         ico: "el-icon-menu",
                         title: "用户管理",
                     }, {
-                        disabled: true,
+                        disabled: false,
                         ico: "el-icon-menu",
                         title: "站点状态",
                     }, {
@@ -299,7 +296,7 @@
                     footerData: {
                         p: 'power by cjie'
                     },
-                    mainData: 'null'
+                    mainData: {}
                 };
             },
             components: {
@@ -307,8 +304,9 @@
                 'bl-header': BlHeader,
                 'bl-footer': BlFooter,
                 'bl-form': BlFormDemo,
+                'bl-upload': BlUploadDemo,
                 'main-0': MainTest,
-                'main-1': BlFormDemo,
+                'main-1': BlUploadDemo,
                 'main-2': BlFormFrant,
             },
             provide: {
