@@ -2,12 +2,14 @@
 $pathinfo = explode('/', $_SERVER['PATH_INFO']);
 $s1 = $pathinfo[1] ?? 'upl';
 $s2 = $pathinfo[2] ?? 'index';
+// $post = json_decode($_POST['json']) ?? $_POST;
+
 // $s1 = $pathinfo[1] ?? 'api';
-define('SaveS', ['api', 'login', 'loginout', 'upl']);
+define('SaveS', ['api', 'login', 'loginout', 'upl', 'req']);
 in_array($s1, SaveS) || exit('erro request');
 
 $demo = new $s1;
-$demo->$s2();
+echo $demo->$s2();
 // exit('right');
 
 
@@ -147,6 +149,30 @@ class login1
 }
 class req
 {
+    function index()
+    {
+
+        $post = json_decode($_POST['json']) ?? $_POST;
+
+        // return $post;
+
+        // var_dump($_REQUEST);
+        // var_dump(json_decode($_POST['json']));
+
+        // var_dump($_GET);
+        // var_dump($_ENV);
+        // var_dump($_SERVER);
+        // $b = ['data'=>$a,];
+        $b = ['data' => $post, 'erro' => '0','msg'=>null];
+        header('Content-Type:application/json');
+        echo json_encode($b);
+    }
+    function res()
+    {
+        header('Content-Type:application/json');
+        $a ='{"data":{"title":"title","links":"dafalut1","logo":"dafalut2","bac":"dafalut3","sortitle":"dafalut4","sortlist":"dafalut5","theme":"#D82828","fontcolor":"#513A3A"},"erro":"0","msg":null}';
+        return $a;
+    }
 }
 class upl
 {
@@ -164,7 +190,7 @@ class upl
         $temp = explode(".", $_FILES["file"]["name"]);
         $extension = end($temp);        // 获取文件后缀名
 
-        $data['message'] = '上传失败';
+        $data['msg'] = '上传失败';
         $data['erro'] = 1;
         header('Content-Type:application/json');
         if ((($_FILES["file"]["type"] == "image/gif")
@@ -177,7 +203,7 @@ class upl
             && in_array($extension, $allowedExts)
         ) {
             if ($_FILES["file"]["error"] > 0) {
-                $data['message'] = "错误：: " . $_FILES["file"]["error"] . "<br>";
+                $data['msg'] = "错误：: " . $_FILES["file"]["error"] . "<br>";
             } else {
                 // echo "上传文件名: " . $_FILES["file"]["name"] . "<br>";
                 // echo "文件类型: " . $_FILES["file"]["type"] . "<br>";
@@ -191,13 +217,13 @@ class upl
                 if ($a) {
                     # code...
                     $data['erro'] = 0;
-                    $data['message'] = '上传成功';
+                    $data['msg'] = '上传成功';
                     $data['url'] = $save_path;
                 }
                 // echo "文件存储在: " .$save_path;
             }
         } else {
-            $data['message'] = "非法的文件格式";
+            $data['msg'] = "非法的文件格式";
         }
         echo json_encode($data);
         exit();

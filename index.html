@@ -9,10 +9,12 @@
     <!-- <script src="htt\ps://unpkg.com/vue@next"></script> -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css"> -->
     <!-- <script src="https://unpkg.com/element-plus/lib/index.full.js"></script> -->
+    <!-- <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="/axios.min.js"></script>
     <script src="/vue.js"></script>
     <link rel="stylesheet" href="/ele.css">
     <script src="/ele.js"></script>
-
     <title>Document</title>
     <style type="text/css">
         body,
@@ -50,8 +52,7 @@
                 <el-container style="border-left: 1px solid #DCDFE6;">
                     <el-main>
                         <el-scrollbar>
-                            <el-page-header @back="goBack" :content="menuItems[hash].title" style="padding-bottom: 100px;">
-                            </el-page-header>
+                            <el-page-header @back="goBack" :content="menuItems[hash].title" style="padding-bottom: 100px;"> </el-page-header>
                             <keep-alive>
                                 <component :is="mainComponent" :data="mainData" style="padding-right: 20px;">null</component>
                             </keep-alive>
@@ -92,15 +93,11 @@
             },
         };
         const BlFooter = {
-            template: `
-                <el-row type="flex" justify="center" align="bottom"> <el-link type="info" :underline="false"> <p>{{data.p}}</p> </el-link> </el-row>
-            `,
+            template: ` <el-row type="flex" justify="center" align="bottom"> <el-link type="info" :underline="false"> <p>{{data.p}}</p> </el-link> </el-row> `,
             props: ['data']
         };
         const MainTest = {
-            template: `
-                <h1>{{data}}</h1>
-            `,
+            template: ` <h1>{{data}}</h1> `,
             props: ['data'],
             data() {
                 return {
@@ -118,10 +115,7 @@
             },
         };
         const BlUploadDemo = {
-            template: `
-            <el-upload class="upload-demo" ref="upload" :action="uploadurl" :on-preview="handlePreview" :on-remove="handleRemove" :on-exceed="exceed" :on-error="error" :on-success="success" :file-list="fileList" :limit="Number(1)" list-type="picture"> <el-button size="small" type="primary">点击上传</el-button> <template #tip> <div class="el-upload__tip"> 只能上传 jpg/png 文件，且不超过 500kb </div> </template> </el-upload>
-
-            `,
+            template: ` <el-upload class="upload-demo" ref="upload" :action="uploadurl" :on-preview="handlePreview" :on-remove="handleRemove" :on-exceed="exceed" :on-error="error" :on-success="success" :file-list="fileList" :limit="Number(1)" list-type="picture"> <el-button size="small" type="primary">点击上传</el-button> <template #tip> <div class="el-upload__tip"> 只能上传 jpg/png 文件，且不超过 500kb </div> </template> </el-upload> `,
             props: ['uploadurl', 'name'],
             emits: ['set-value'],
             data() {
@@ -141,7 +135,7 @@
                     this.$message('click on item ,but nothing to show');
                 },
                 exceed() {
-                    this.$message('已达上限');
+                    this.$message.warning('已达上限');
                 },
                 success(response, file, fileList) {
                     if (response.erro == 0) {
@@ -150,21 +144,19 @@
                             url: response.url
                         };
                         this.$emit('set-value', a);
+                        this.$message.success(response.msg);
                     } else {
-                        this.$refs.upload.clearFiles() && this.$message('上传失败');
+                        this.$refs.upload.clearFiles();
+                        this.$message.error(response.msg);
                     }
                 },
                 error() {
-                    this.$message('上传失败');
+                    this.$message.warning('上传失败');
                 }
             }
         };
         const BlFormDemo = {
-            template: `
-            
-            <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type == 'switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --> </el-form-item> </el-form>
-            
-            `,
+            template: ` <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type == 'switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --> </el-form-item> </el-form> `,
             data() {
                 var data = {
                     form: {},
@@ -196,12 +188,9 @@
                     console.log('submit!');
                 }
             },
-
         };
         const BlFormFrant = {
-            template: `
-            <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type =='switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> <bl-upload :uploadurl="action" :name="item.name" @set-value="setValue" v-if="item.type=='upload'"></bl-upload> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --></el-form-item> </el-form>
-            `,
+            template: ` <el-form ref="form1" :model="form" label-width="100px"> <el-form-item :label="item.label" v-for="(item,index) in items"> <el-input v-model="form[item.name]" :type="item.type" v-if="item.type == 'text' ||item.type == 'textarea'" style="max-width:90vh"></el-input> <el-switch v-model="form[item.name]" active-color="#13ce66" inactive-color="#ff4949" v-if="item.type =='switch'"> </el-switch> <el-color-picker v-model="form[item.name]" v-if="item.type=='color'"></el-color-picker> <bl-upload :uploadurl="action" :name="item.name" @set-value="setValue" v-if="item.type=='upload'"></bl-upload> </el-form-item> <el-form-item> <el-button type="primary" @click="onSubmit">立即创建</el-button> <!-- <el-button>取消</el-button> --></el-form-item> </el-form> `,
             data() {
                 var data = {
                     form: {},
@@ -240,39 +229,48 @@
                         label: '字体色',
                     }]
                 };
-                for (const key in data.items) {
-                    data.form[data.items[key].name] = 'dafalut' + key;
-                }
+                axios.get('/test.php/req/res').then(function(response) {
+                    data.form = response.data.data;
+                }).catch(function(error) {
+                    console.log(error);
+                });
+                console.log(data);
                 return data;
             },
             methods: {
                 onSubmit() {
-                    console.log('submit!');
-                    console.log(this.form);
-                    console.log(this);
+                    axios({
+                        url: '/test.php/req',
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        data: 'json=' + JSON.stringify(this.form)
+                    }).then(function(response) {
+                        response.erro == 0 && this.$message.success(response.msg);
+                        console.log(this.$message);
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
                 },
                 setValue(data) {
-                    // form.
-                    console.log('setvalue');
-                    console.log(data);
+                    this.form[data.name] = data.url;
                 }
             },
             components: {
                 'bl-upload': BlUploadDemo,
             }
-
         };
         const App = {
             data() {
                 return {
-                    message: "Hello Element Plus ",
                     hash: location.hash.substr(1, 2) || "2",
                     menuItems: [{
                         disabled: true,
                         ico: "el-icon-menu",
                         title: "用户管理",
                     }, {
-                        disabled: false,
+                        disabled: true,
                         ico: "el-icon-menu",
                         title: "站点状态",
                     }, {
@@ -321,11 +319,8 @@
                 }
             },
             methods: {
-                goBack() {
-                    console.log('go back');
-                },
+                goBack() {},
                 changHash(hash, title) {
-                    console.log('hashchang');
                     this.hash = hash;
                 }
             },
