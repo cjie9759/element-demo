@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title></title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="./front/video-js.min.css" rel="stylesheet">
+    <script src="./front/video.min.js"></script>
+    <script src="./front/videojs-flash.js"></script>
+    <script src="./front/videojs-contrib-hls.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+        }
+        
+        .info {
+            background-color: #eee;
+            border: thin solid #333;
+            border-radius: 3px;
+            padding: 0 5px;
+            margin: 20px 0;
+        }
+        
+        input {
+            margin-top: 15px;
+            min-width: 450px;
+            padding: 5px;
+        }
+        
+        .syau-2019 {
+            height: 450px;
+        }
+        
+        .video-wrapper {
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .logobg {
+            width: 100%;
+            /* background-color: #cc0033; */
+        }
+        
+        .header {
+            width: 100%;
+            height: 95px;
+            margin: 0 auto;
+        }
+        
+        .table-list {
+            margin-left: 20px;
+        }
+        
+        .syau-footer {
+            /* background-color: #cc0033; */
+            height: 100px;
+            margin: 15px auto 0 auto;
+            border-top: solid yellow 3px;
+        }
+        
+        .video-js .vjs-time-control {
+            display: block;
+        }
+        
+        .video-js .vjs-remaining-time {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!--版头-->
+    <div class="container" style="margin: 0 auto;">
+        <div class="logobg col-md-12">
+            <div class="header cleafix">
+                <!-- logo -->
+                <p></p>
+                <span class="visible-xs visible-sm" style="text-align: center;color: ghostwhite;font-size: 38px;" id="page_in_title"></span>
+                <a class="logo  hidden-xs hidden-sm" href="/" onfocus="undefined"><img class="logoimg" style="text-align: center;" src=""></a>
+                <span class="title hidden-xs hidden-sm" style="text-align: center;color: ghostwhite;font-size: 38px;" id="page_in_title"></span>
+                <h1>title</h1>
+
+            </div>
+        </div>
+    </div>
+    <!--直播视频 2019年6月24日 17:49:31 yoonching-->
+    <div class="container" style="margin: 0 auto;">
+        <div class="video-wrapper col-md-12">
+            <!--视频-->
+            <video id="videojs-contrib-hls-player" poster="" class="video-js vjs-default-skin syau-2019 row col-md-9 col-xs-12" controls>
+        <source src="" type="application/x-mpegURL">
+      </video>
+            <!--流程-->
+            <div class="col-md-3 col-xs-12" style="">
+                <table class="table table-list">
+                    <caption style="color: #111111" id="sort_title"></caption>
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">序号</th>
+                            <th>名称</th>
+                            <!--<th>时间</th>-->
+                        </tr>
+
+                    </thead>
+                    <tbody id="list_sort">
+                        <!-- <tr>
+              <td>1</td>
+              <td>升国旗，奏国歌</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>宣读2020届毕业生名单</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>本科毕业生代表颁发毕业证书</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>硕士、博士毕业生代表颁发毕业证书</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>毕业生代表，毕业生家长代表，在校生代表发言</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>教师代表发言</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>校长陈启军教授讲话</td>
+              <td>9:00-</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>学位授予仪式</td>
+              <td>9:00-</td>
+            </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <!--电脑版流程-->
+
+        </div>
+
+    </div>
+    <!--底栏-->
+    <div class="container">
+        <div class="syau-footer">
+            <p></p>
+            <p style="text-align: center;">
+                <span style="text-transform: none; text-indent: 0px; letter-spacing: normal; color:white; font: 14px/40px 微软雅黑; float: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important;">
+          Copyright © 1999-2020 Shenyang Agricultural University. <a title="国家备案网" href="http://www.miibeian.gov.cn"
+            target="_blank">&nbsp;辽ICP备05001374号</a>
+        </span>
+            </p>
+            <p style="text-align: center;">
+                <span style="text-transform: none; text-indent: 0px; letter-spacing: normal; color:white; font: 14px/40px 微软雅黑; float: none; word-spacing: 0px; -webkit-text-stroke-width: 0px; display: inline !important;">
+          网站技术支持:现代教育信息中心 网页制作:陈杰  地址:辽宁省沈阳市沈河区东陵路120号　邮编:110866
+        </span>
+            </p>
+        </div>
+    </div>
+
+
+
+    <script>
+        // /*(function(window, videojs) {
+        //     var player = window.player = videojs('videojs-contrib-hls-player');
+
+        //     // hook up the video switcher
+        //     var loadUrl = document.getElementById('load-url');
+        //     var url = document.getElementById('url');
+        //     loadUrl.addEventListener('submit', function(event) {
+        //     event.preventDefault();
+        //     player.src({
+        //         src: url.value,
+        //         type: 'application/x-mpegURL'
+        //     });
+        //     return false;
+        //     });
+        // }(window, window.videojs));*/
+
+        $(function() {
+            $.ajax({
+                type: "GET",
+                url: "/api/getdata",
+                // data: $("#form-add").serialize(),
+                dataType: "json",
+                success: function(data) {
+                    // alert(data.message);
+
+                    if (data.erro) {
+                        alert('获取信息失败，');
+                    } else {
+                        // $('#title').val(data.title);
+                        // $('#links').val(data.links);
+                        // $('#img').val(data.img);
+                        var link = data.link;
+                        $('title').html(data.title);
+                        $('.title').html(data.title);
+                        $('source').attr("src", data.link);
+                        $('.logoimg').attr("src", data.logo);
+                        // $('.logoimg1').attr("src", data.img1);
+
+                        $('.logobg').css("background-color", data.theme);
+                        $('.syau-footer').css("background-color", data.theme);
+                        $('span').css("color", data.fontcolor);
+                        $('body').css("font")
+                        $('#page_in_title').html(data.title);
+                        $('#sort_title').html(data.sortitle);
+                        $('#list_sort').html(data.sortlist);
+                        $('#videojs-contrib-hls-player').attr("poster", data.bac);
+
+                        (function(window, videojs) {
+                            var player = window.player = videojs('videojs-contrib-hls-player');
+
+                            // hook up the video switcher
+                            var loadUrl = document.getElementById('load-url');
+                            var url = document.getElementById('url');
+                            loadUrl.addEventListener('submit', function(event) {
+                                event.preventDefault();
+                                player.src({
+                                    src: url.value,
+                                    type: 'application/x-mpegURL'
+                                });
+                                return false;
+                            });
+                        }(window, window.videojs));
+
+                        /* flowplayer('#player', {
+                             live: true,  // set if it's a livestream
+                             ratio: 9/16, // set the aspect ratio of the stream
+                             clip: {
+                                 sources: [
+                                     // path to the HLS m3u8
+                                     { type: "application/x-mpegurl", src: link},
+                                 ]
+                             }
+                         });*/
+                    };
+                },
+                error: function() {
+                    alert('获取信息失败，');
+                },
+            });
+
+        });
+    </script>
+</body>
+
+</html>
