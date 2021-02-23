@@ -71,12 +71,8 @@
             inject: ['hash'],
             props: ['items'],
             methods: {
-                handleOpen(key, keyPath) {
-                    console.log(key, keyPath);
-                },
-                handleClose(key, keyPath) {
-                    console.log(key, keyPath);
-                },
+                handleOpen(key, keyPath) {},
+                handleClose(key, keyPath) {},
                 select(key, keyPath) {
                     location.hash = key;
                     this.$emit('hash-chang', key);
@@ -184,9 +180,7 @@
                 return data;
             },
             methods: {
-                onSubmit() {
-                    console.log('submit!');
-                }
+                onSubmit() {}
             },
         };
         const BlFormFrant = {
@@ -231,10 +225,7 @@
                 };
                 axios.get('/test.php/req/res').then(function(response) {
                     data.form = response.data.data;
-                }).catch(function(error) {
-                    console.log(error);
-                });
-                console.log(data);
+                }).catch(function(error) {});
                 return data;
             },
             methods: {
@@ -248,10 +239,7 @@
                         data: 'json=' + JSON.stringify(this.form)
                     }).then(function(response) {
                         response.erro == 0 && this.$message.success(response.msg);
-                        console.log(this.$message);
-                    }).catch(function(error) {
-                        console.log(error);
-                    });
+                    }).catch(function(error) {});
                 },
                 setValue(data) {
                     this.form[data.name] = data.url;
